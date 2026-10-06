@@ -23,9 +23,11 @@ import com.example.matrimonal.ui.screens.MilanProfileScreen
 import com.example.matrimonal.ui.screens.MilanRegisterScreen
 import com.example.matrimonal.ui.screens.MilanResetPasswordScreen
 import com.example.matrimonal.ui.screens.MilanSplashScreen
-import com.example.matrimonal.ui.theme.MatrimonalTheme
 import com.example.matrimonal.ui.screens.MilanSettingsScreen
 import com.example.matrimonal.ui.screens.MilanPartnerPreferencesScreen
+import com.example.matrimonal.ui.screens.MilanNotificationsScreen
+import com.example.matrimonal.ui.theme.MatrimonalTheme
+
 
 class MainActivity : ComponentActivity() {
 
@@ -56,6 +58,7 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     }
+
 
                     // =========================================================
                     // LOGIN
@@ -99,6 +102,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
+
                     // =========================================================
                     // REGISTER
                     // =========================================================
@@ -137,6 +141,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
+
                     // =========================================================
                     // FORGOT PASSWORD
                     // =========================================================
@@ -154,6 +159,7 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     }
+
 
                     // =========================================================
                     // EMAIL SENT
@@ -178,6 +184,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
+
                     // =========================================================
                     // RESET PASSWORD
                     // =========================================================
@@ -195,6 +202,7 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     }
+
 
                     // =========================================================
                     // HOME
@@ -221,7 +229,7 @@ class MainActivity : ComponentActivity() {
                             },
 
                             onNotificationClick = {
-                                // Notifications will be added later.
+                                currentScreen = "notifications"
                             },
 
                             onSearchClick = {
@@ -237,6 +245,7 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     }
+
 
                     // =========================================================
                     // DISCOVER
@@ -260,6 +269,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
+
                     // =========================================================
                     // MATCHES
                     // =========================================================
@@ -282,6 +292,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
+
                     // =========================================================
                     // CHAT LIST
                     // =========================================================
@@ -300,6 +311,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
+
                     // =========================================================
                     // CHAT
                     // =========================================================
@@ -313,6 +325,7 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     }
+
 
                     // =========================================================
                     // MY PROFILE
@@ -336,6 +349,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
+
                     // =========================================================
                     // EDIT PROFILE
                     // =========================================================
@@ -353,6 +367,7 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     }
+
 
                     // =========================================================
                     // OTHER USER PROFILE
@@ -376,60 +391,94 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
-                    // ============================================================
-                    //                         SETTINGS
-                    // ============================================================
+
+                    // =========================================================
+                    // SETTINGS
+                    // =========================================================
 
                     "settings" -> {
+
                         MilanSettingsScreen(
+
                             onBackClick = {
                                 currentScreen = "profile"
                             },
+
                             onPersonalInfoClick = {
                                 currentScreen = "editProfile"
                             },
+
                             onChangePasswordClick = {
                                 currentScreen = "resetPassword"
                             },
+
                             onProfileVisibilityClick = {
                                 // Later
                             },
+
                             onBlockedUsersClick = {
                                 // Later
                             },
+
                             onSecurityClick = {
                                 // Later
                             },
+
                             onPartnerPreferencesClick = {
                                 currentScreen = "partnerPreferences"
                             },
+
                             onHelpClick = {
                                 // Later
                             },
+
                             onReportProblemClick = {
                                 // Later
                             },
+
                             onTermsClick = {
                                 // Later
                             },
+
                             onPrivacyClick = {
                                 // Later
                             },
+
                             onLogout = {
                                 currentScreen = "login"
                             }
                         )
                     }
 
-                    // =======================================================
-                    //      Partner Preferences
-                    // =======================================================
+
+                    // =========================================================
+                    // PARTNER PREFERENCES
+                    // =========================================================
+
                     "partnerPreferences" -> {
+
                         MilanPartnerPreferencesScreen(
+
                             onBackClick = {
                                 currentScreen = "settings"
                             },
+
                             onSaveClick = {
+                                currentScreen = "settings"
+                            }
+                        )
+                    }
+
+
+                    // =========================================================
+                    // NOTIFICATIONS
+                    // =========================================================
+
+                    "notifications" -> {
+
+                        MilanNotificationsScreen(
+
+                            onBackClick = {
                                 currentScreen = "settings"
                             }
                         )
