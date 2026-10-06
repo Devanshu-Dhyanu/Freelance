@@ -1,7 +1,6 @@
 package com.example.matrimonal.ui.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,70 +12,36 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.matrimonal.ui.theme.PoppinsFamily
 import com.example.matrimonal.ui.theme.RoseBorder
+import com.example.matrimonal.ui.theme.RoseDark
 import com.example.matrimonal.ui.theme.RoseLight
 import com.example.matrimonal.ui.theme.RosePrimary
 import com.example.matrimonal.ui.theme.RoseVeryLight
 import com.example.matrimonal.ui.theme.TextMain
 import com.example.matrimonal.ui.theme.TextSecondary
 
-private data class DiscoverProfile(
+data class DiscoverProfile(
     val name: String,
     val age: Int,
     val city: String,
     val profession: String,
-    val match: Int,
-    val initials: String
-)
-
-private val discoverProfiles = listOf(
-    DiscoverProfile(
-        "Riya Sharma",
-        24,
-        "Chandigarh",
-        "Software Engineer",
-        88,
-        "RS"
-    ),
-    DiscoverProfile(
-        "Aarav Mehta",
-        26,
-        "New Delhi",
-        "Product Designer",
-        90,
-        "AM"
-    ),
-    DiscoverProfile(
-        "Meera Kapoor",
-        23,
-        "Bengaluru",
-        "Data Analyst",
-        85,
-        "MK"
-    ),
-    DiscoverProfile(
-        "Kavya Singh",
-        25,
-        "Mumbai",
-        "Marketing Manager",
-        91,
-        "KS"
-    )
+    val education: String,
+    val match: Int
 )
 
 @Composable
@@ -86,37 +51,99 @@ fun MilanDiscoverScreen(
     onLikeClick: () -> Unit = {}
 ) {
 
+    val profiles = remember {
+        mutableStateListOf(
+            DiscoverProfile(
+                "Aarav Sharma",
+                25,
+                "New Delhi",
+                "Software Engineer",
+                "MBA",
+                92
+            ),
+            DiscoverProfile(
+                "Rohan Mehta",
+                27,
+                "Gurgaon",
+                "Product Manager",
+                "B.Tech",
+                88
+            ),
+            DiscoverProfile(
+                "Aditya Kapoor",
+                26,
+                "Chandigarh",
+                "Business Analyst",
+                "MBA",
+                85
+            ),
+            DiscoverProfile(
+                "Karan Malhotra",
+                28,
+                "Noida",
+                "Software Developer",
+                "M.Tech",
+                81
+            )
+        )
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(RoseVeryLight)
     ) {
 
+        // =========================================================
+        // TOP BAR
+        // =========================================================
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 18.dp),
+                .padding(
+                    horizontal = 20.dp,
+                    vertical = 18.dp
+                ),
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            Text(
-                text = "‹",
-                fontSize = 36.sp,
-                color = TextMain,
-                modifier = Modifier.clickable { onBackClick() }
-            )
+            Box(
+                modifier = Modifier
+                    .size(42.dp)
+                    .clip(RoundedCornerShape(14.dp))
+                    .background(RoseLight)
+                    .clickable {
+                        onBackClick()
+                    },
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "‹",
+                    fontSize = 32.sp,
+                    color = RosePrimary
+                )
+            }
 
-            Spacer(modifier = Modifier.width(12.dp))
+            Spacer(modifier = Modifier.size(14.dp))
 
-            Text(
-                text = "Discover",
-                fontFamily = PoppinsFamily,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = TextMain
-            )
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
 
-            Spacer(modifier = Modifier.weight(1f))
+                Text(
+                    text = "Discover",
+                    fontSize = 21.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TextMain
+                )
+
+                Text(
+                    text = "Find someone who matches you",
+                    fontSize = 12.sp,
+                    color = TextSecondary
+                )
+            }
 
             Box(
                 modifier = Modifier
@@ -126,37 +153,71 @@ fun MilanDiscoverScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "☰",
+                    text = "⚙",
                     fontSize = 19.sp,
                     color = RosePrimary
                 )
             }
         }
 
+        Divider(color = RoseBorder)
+
+        // =========================================================
+        // FILTERS
+        // =========================================================
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp),
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
+                .padding(
+                    horizontal = 20.dp,
+                    vertical = 14.dp
+                ),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
 
-            DiscoverFilterChip("All", true)
+            DiscoverFilter(
+                text = "Age",
+                modifier = Modifier.weight(1f)
+            )
 
-            DiscoverFilterChip("Nearby", false)
+            DiscoverFilter(
+                text = "Location",
+                modifier = Modifier.weight(1f)
+            )
 
-            DiscoverFilterChip("New", false)
+            DiscoverFilter(
+                text = "Religion",
+                modifier = Modifier.weight(1f)
+            )
         }
 
-        Spacer(modifier = Modifier.height(18.dp))
+        // =========================================================
+        // PROFILE LIST
+        // =========================================================
 
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(14.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
 
-            items(discoverProfiles) { profile ->
+            item {
+                Text(
+                    text = "${profiles.size} profiles found",
+                    modifier = Modifier.padding(
+                        horizontal = 20.dp
+                    ),
+                    fontSize = 13.sp,
+                    color = TextSecondary
+                )
+            }
 
-                MilanDiscoverCard(
+            items(
+                items = profiles,
+                key = { it.name }
+            ) { profile ->
+
+                DiscoverProfileCard(
                     profile = profile,
                     onProfileClick = onProfileClick,
                     onLikeClick = onLikeClick
@@ -164,44 +225,52 @@ fun MilanDiscoverScreen(
             }
 
             item {
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(
+                    modifier = Modifier.height(20.dp)
+                )
             }
         }
     }
 }
 
+
+// =============================================================
+// FILTER
+// =============================================================
+
 @Composable
-private fun DiscoverFilterChip(
+private fun DiscoverFilter(
     text: String,
-    selected: Boolean
+    modifier: Modifier = Modifier
 ) {
 
     Box(
-        modifier = Modifier
-            .clip(RoundedCornerShape(20.dp))
-            .background(
-                if (selected) RosePrimary else Color.White
-            )
-            .border(
-                1.dp,
-                if (selected) RosePrimary else RoseBorder,
-                RoundedCornerShape(20.dp)
-            )
-            .padding(horizontal = 18.dp, vertical = 9.dp)
+        modifier = modifier
+            .clip(RoundedCornerShape(12.dp))
+            .background(RoseLight)
+            .padding(
+                horizontal = 10.dp,
+                vertical = 10.dp
+            ),
+        contentAlignment = Alignment.Center
     ) {
 
         Text(
             text = text,
-            fontFamily = PoppinsFamily,
-            fontSize = 12.sp,
+            fontSize = 11.sp,
             fontWeight = FontWeight.Medium,
-            color = if (selected) Color.White else TextSecondary
+            color = RoseDark
         )
     }
 }
 
+
+// =============================================================
+// PROFILE CARD
+// =============================================================
+
 @Composable
-private fun MilanDiscoverCard(
+private fun DiscoverProfileCard(
     profile: DiscoverProfile,
     onProfileClick: () -> Unit,
     onLikeClick: () -> Unit
@@ -211,87 +280,182 @@ private fun MilanDiscoverCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp)
-            .clip(RoundedCornerShape(22.dp))
-            .background(Color.White)
-            .border(
-                1.dp,
-                RoseBorder,
-                RoundedCornerShape(22.dp)
-            )
-            .clickable { onProfileClick() }
-            .padding(16.dp)
+            .clip(RoundedCornerShape(20.dp))
+            .background(RoseVeryLight)
     ) {
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically
+        // PROFILE IMAGE PLACEHOLDER
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(230.dp)
+                .clip(RoundedCornerShape(20.dp))
+                .background(RoseLight)
+                .clickable {
+                    onProfileClick()
+                },
+            contentAlignment = Alignment.Center
         ) {
 
-            Box(
-                modifier = Modifier
-                    .size(72.dp)
-                    .clip(CircleShape)
-                    .background(RoseLight),
-                contentAlignment = Alignment.Center
-            ) {
-
-                Text(
-                    text = profile.initials,
-                    fontFamily = PoppinsFamily,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = RosePrimary
-                )
-            }
-
-            Spacer(modifier = Modifier.width(14.dp))
-
             Column(
-                modifier = Modifier.weight(1f)
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                Text(
-                    text = "${profile.name}, ${profile.age}",
-                    fontFamily = PoppinsFamily,
-                    fontSize = 17.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = TextMain
+                Box(
+                    modifier = Modifier
+                        .size(90.dp)
+                        .clip(CircleShape)
+                        .background(RosePrimary),
+                    contentAlignment = Alignment.Center
+                ) {
+
+                    Text(
+                        text = profile.name.first().toString(),
+                        fontSize = 34.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = RoseVeryLight
+                    )
+                }
+
+                Spacer(
+                    modifier = Modifier.height(10.dp)
                 )
 
-                Spacer(modifier = Modifier.height(3.dp))
-
                 Text(
-                    text = "${profile.city} • ${profile.profession}",
-                    fontFamily = PoppinsFamily,
+                    text = "Profile Photo",
                     fontSize = 12.sp,
                     color = TextSecondary
                 )
-
-                Spacer(modifier = Modifier.height(7.dp))
-
-                Text(
-                    text = "${profile.match}% Match",
-                    fontFamily = PoppinsFamily,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = RosePrimary
-                )
             }
+
+            // MATCH BADGE
 
             Box(
                 modifier = Modifier
-                    .size(42.dp)
-                    .clip(CircleShape)
-                    .background(RoseLight)
-                    .clickable { onLikeClick() },
-                contentAlignment = Alignment.Center
+                    .align(Alignment.TopEnd)
+                    .padding(14.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(RosePrimary)
+                    .padding(
+                        horizontal = 10.dp,
+                        vertical = 7.dp
+                    )
             ) {
 
                 Text(
-                    text = "♥",
-                    fontSize = 20.sp,
-                    color = RosePrimary
+                    text = "${profile.match}% Match",
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = RoseVeryLight
                 )
             }
+        }
+
+        Spacer(
+            modifier = Modifier.height(14.dp)
+        )
+
+        // PROFILE DETAILS
+
+        Column(
+            modifier = Modifier.padding(
+                horizontal = 16.dp
+            )
+        ) {
+
+            Text(
+                text = "${profile.name}, ${profile.age}",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                color = TextMain
+            )
+
+            Spacer(
+                modifier = Modifier.height(5.dp)
+            )
+
+            Text(
+                text = "📍 ${profile.city}",
+                fontSize = 12.sp,
+                color = TextSecondary
+            )
+
+            Spacer(
+                modifier = Modifier.height(4.dp)
+            )
+
+            Text(
+                text = "💼 ${profile.profession}",
+                fontSize = 12.sp,
+                color = TextSecondary
+            )
+
+            Spacer(
+                modifier = Modifier.height(4.dp)
+            )
+
+            Text(
+                text = "🎓 ${profile.education}",
+                fontSize = 12.sp,
+                color = TextSecondary
+            )
+
+            Spacer(
+                modifier = Modifier.height(14.dp)
+            )
+
+            // BUTTONS
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .clip(RoundedCornerShape(14.dp))
+                        .background(RoseLight)
+                        .clickable {
+                            onProfileClick()
+                        }
+                        .padding(vertical = 13.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+
+                    Text(
+                        text = "View Profile",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = RoseDark
+                    )
+                }
+
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .clip(RoundedCornerShape(14.dp))
+                        .background(RosePrimary)
+                        .clickable {
+                            onLikeClick()
+                        }
+                        .padding(vertical = 13.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+
+                    Text(
+                        text = "♥ Like",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = RoseVeryLight
+                    )
+                }
+            }
+
+            Spacer(
+                modifier = Modifier.height(18.dp)
+            )
         }
     }
 }
