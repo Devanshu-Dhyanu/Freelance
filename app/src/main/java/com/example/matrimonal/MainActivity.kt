@@ -346,7 +346,7 @@ class MainActivity : ComponentActivity() {
                                 currentScreen = "home"
                             },
 
-                            onEditProfile = {
+                            onEditProfileClick = {
                                 currentScreen = "editProfile"
                             },
 
