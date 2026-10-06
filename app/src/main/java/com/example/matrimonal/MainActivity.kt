@@ -24,6 +24,7 @@ import com.example.matrimonal.ui.screens.MilanRegisterScreen
 import com.example.matrimonal.ui.screens.MilanResetPasswordScreen
 import com.example.matrimonal.ui.screens.MilanSplashScreen
 import com.example.matrimonal.ui.theme.MatrimonalTheme
+import com.example.matrimonal.ui.screens.MilanSettingsScreen
 
 class MainActivity : ComponentActivity() {
 
@@ -329,7 +330,7 @@ class MainActivity : ComponentActivity() {
                             },
 
                             onSettingsClick = {
-                                // Settings will be added later.
+                                currentScreen = "settings"
                             }
                         )
                     }
@@ -370,6 +371,51 @@ class MainActivity : ComponentActivity() {
 
                             onChatClick = {
                                 currentScreen = "chat"
+                            }
+                        )
+                    }
+
+                    // ============================================================
+                    //                         SETTINGS
+                    // ============================================================
+
+                    "settings" -> {
+                        MilanSettingsScreen(
+                            onBackClick = {
+                                currentScreen = "profile"
+                            },
+                            onPersonalInfoClick = {
+                                currentScreen = "editProfile"
+                            },
+                            onChangePasswordClick = {
+                                currentScreen = "resetPassword"
+                            },
+                            onProfileVisibilityClick = {
+                                // Later
+                            },
+                            onBlockedUsersClick = {
+                                // Later
+                            },
+                            onSecurityClick = {
+                                // Later
+                            },
+                            onPartnerPreferencesClick = {
+                                // We will create this screen next
+                            },
+                            onHelpClick = {
+                                // Later
+                            },
+                            onReportProblemClick = {
+                                // Later
+                            },
+                            onTermsClick = {
+                                // Later
+                            },
+                            onPrivacyClick = {
+                                // Later
+                            },
+                            onLogout = {
+                                currentScreen = "login"
                             }
                         )
                     }
