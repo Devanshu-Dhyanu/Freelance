@@ -1,7 +1,6 @@
 package com.example.matrimonal.ui.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,41 +12,34 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.matrimonal.ui.theme.PoppinsFamily
 import com.example.matrimonal.ui.theme.RoseBorder
+import com.example.matrimonal.ui.theme.RoseDark
 import com.example.matrimonal.ui.theme.RoseLight
 import com.example.matrimonal.ui.theme.RosePrimary
 import com.example.matrimonal.ui.theme.RoseVeryLight
 import com.example.matrimonal.ui.theme.TextMain
 import com.example.matrimonal.ui.theme.TextSecondary
 
-private data class MatchProfile(
+data class MilanMatch(
     val name: String,
     val age: Int,
     val city: String,
-    val initials: String,
-    val percentage: Int
-)
-
-private val matches = listOf(
-    MatchProfile("Anjali", 24, "Delhi", "A", 94),
-    MatchProfile("Pooja", 25, "Mumbai", "P", 91),
-    MatchProfile("Sneha", 23, "Pune", "S", 89),
-    MatchProfile("Kavya", 26, "Bengaluru", "K", 87)
+    val profession: String,
+    val matchPercentage: Int,
+    val lastActive: String
 )
 
 @Composable
@@ -57,51 +49,191 @@ fun MilanMatchesScreen(
     onChatClick: () -> Unit = {}
 ) {
 
+    val matches = listOf(
+
+        MilanMatch(
+            name = "Anjali Verma",
+            age = 24,
+            city = "New Delhi",
+            profession = "UI/UX Designer",
+            matchPercentage = 94,
+            lastActive = "Active now"
+        ),
+
+        MilanMatch(
+            name = "Pooja Sharma",
+            age = 25,
+            city = "Gurgaon",
+            profession = "Software Engineer",
+            matchPercentage = 91,
+            lastActive = "Active 10m ago"
+        ),
+
+        MilanMatch(
+            name = "Sneha Kapoor",
+            age = 26,
+            city = "Chandigarh",
+            profession = "Data Analyst",
+            matchPercentage = 87,
+            lastActive = "Active 1h ago"
+        ),
+
+        MilanMatch(
+            name = "Kavya Mehta",
+            age = 25,
+            city = "Noida",
+            profession = "Product Designer",
+            matchPercentage = 84,
+            lastActive = "Active 2h ago"
+        )
+    )
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(RoseVeryLight)
     ) {
 
+        // =========================================================
+        // TOP BAR
+        // =========================================================
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp),
+                .padding(
+                    horizontal = 20.dp,
+                    vertical = 18.dp
+                ),
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            Text(
-                text = "‹",
-                fontSize = 36.sp,
-                color = TextMain,
-                modifier = Modifier.clickable { onBackClick() }
+            Box(
+                modifier = Modifier
+                    .size(42.dp)
+                    .clip(RoundedCornerShape(14.dp))
+                    .background(RoseLight)
+                    .clickable {
+                        onBackClick()
+                    },
+                contentAlignment = Alignment.Center
+            ) {
+
+                Text(
+                    text = "‹",
+                    fontSize = 32.sp,
+                    color = RosePrimary
+                )
+            }
+
+            Spacer(
+                modifier = Modifier.size(14.dp)
             )
 
-            Spacer(modifier = Modifier.width(12.dp))
+            Column {
 
-            Text(
-                text = "My Matches",
-                fontFamily = PoppinsFamily,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = TextMain
-            )
+                Text(
+                    text = "Matches",
+                    fontSize = 21.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TextMain
+                )
+
+                Text(
+                    text = "People who match your preferences",
+                    fontSize = 12.sp,
+                    color = TextSecondary
+                )
+            }
         }
 
-        Text(
-            text = "People who match your preferences",
-            fontFamily = PoppinsFamily,
-            fontSize = 13.sp,
-            color = TextSecondary,
-            modifier = Modifier.padding(horizontal = 20.dp)
+        Divider(
+            color = RoseBorder
         )
 
-        Spacer(modifier = Modifier.height(18.dp))
+        // =========================================================
+        // MATCH SUMMARY
+        // =========================================================
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    horizontal = 20.dp,
+                    vertical = 16.dp
+                )
+                .clip(RoundedCornerShape(18.dp))
+                .background(RoseLight)
+                .padding(18.dp)
+        ) {
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Box(
+                    modifier = Modifier
+                        .size(52.dp)
+                        .clip(CircleShape)
+                        .background(RosePrimary),
+                    contentAlignment = Alignment.Center
+                ) {
+
+                    Text(
+                        text = "♥",
+                        fontSize = 25.sp,
+                        color = RoseVeryLight
+                    )
+                }
+
+                Spacer(
+                    modifier = Modifier.size(14.dp)
+                )
+
+                Column {
+
+                    Text(
+                        text = "${matches.size} Great Matches",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TextMain
+                    )
+
+                    Spacer(
+                        modifier = Modifier.height(3.dp)
+                    )
+
+                    Text(
+                        text = "Start a conversation and discover more",
+                        fontSize = 11.sp,
+                        color = TextSecondary
+                    )
+                }
+            }
+        }
+
+        // =========================================================
+        // MATCH LIST
+        // =========================================================
 
         LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(14.dp)
         ) {
+
+            item {
+
+                Text(
+                    text = "Your Matches",
+                    modifier = Modifier.padding(
+                        horizontal = 20.dp
+                    ),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TextMain
+                )
+            }
 
             items(matches) { match ->
 
@@ -113,15 +245,23 @@ fun MilanMatchesScreen(
             }
 
             item {
-                Spacer(modifier = Modifier.height(20.dp))
+
+                Spacer(
+                    modifier = Modifier.height(20.dp)
+                )
             }
         }
     }
 }
 
+
+// =============================================================
+// MATCH CARD
+// =============================================================
+
 @Composable
 private fun MilanMatchCard(
-    match: MatchProfile,
+    match: MilanMatch,
     onProfileClick: () -> Unit,
     onChatClick: () -> Unit
 ) {
@@ -130,79 +270,132 @@ private fun MilanMatchCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp)
-            .clip(RoundedCornerShape(20.dp))
-            .background(Color.White)
-            .border(1.dp, RoseBorder, RoundedCornerShape(20.dp))
+            .clip(RoundedCornerShape(18.dp))
+            .background(RoseVeryLight)
+            .clickable {
+                onProfileClick()
+            }
             .padding(14.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
 
+        // =====================================================
+        // AVATAR
+        // =====================================================
+
         Box(
             modifier = Modifier
-                .size(62.dp)
+                .size(72.dp)
                 .clip(CircleShape)
                 .background(RoseLight),
             contentAlignment = Alignment.Center
         ) {
 
             Text(
-                text = match.initials,
-                fontFamily = PoppinsFamily,
-                fontSize = 20.sp,
+                text = match.name.first().toString(),
+                fontSize = 27.sp,
                 fontWeight = FontWeight.Bold,
                 color = RosePrimary
             )
         }
 
-        Spacer(modifier = Modifier.width(14.dp))
+        Spacer(
+            modifier = Modifier.size(14.dp)
+        )
+
+        // =====================================================
+        // DETAILS
+        // =====================================================
 
         Column(
-            modifier = Modifier
-                .weight(1f)
-                .clickable { onProfileClick() }
+            modifier = Modifier.weight(1f)
         ) {
 
             Text(
                 text = "${match.name}, ${match.age}",
-                fontFamily = PoppinsFamily,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.SemiBold,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Bold,
                 color = TextMain
             )
 
+            Spacer(
+                modifier = Modifier.height(4.dp)
+            )
+
             Text(
-                text = match.city,
-                fontFamily = PoppinsFamily,
-                fontSize = 12.sp,
+                text = match.profession,
+                fontSize = 11.sp,
                 color = TextSecondary
             )
 
-            Spacer(modifier = Modifier.height(5.dp))
+            Spacer(
+                modifier = Modifier.height(2.dp)
+            )
 
             Text(
-                text = "${match.percentage}% Compatible",
-                fontFamily = PoppinsFamily,
+                text = "📍 ${match.city}",
                 fontSize = 11.sp,
-                fontWeight = FontWeight.Medium,
+                color = TextSecondary
+            )
+
+            Spacer(
+                modifier = Modifier.height(5.dp)
+            )
+
+            Text(
+                text = match.lastActive,
+                fontSize = 10.sp,
                 color = RosePrimary
             )
         }
 
-        Box(
-            modifier = Modifier
-                .clip(RoundedCornerShape(15.dp))
-                .background(RosePrimary)
-                .clickable { onChatClick() }
-                .padding(horizontal = 14.dp, vertical = 9.dp)
+        // =====================================================
+        // RIGHT SIDE
+        // =====================================================
+
+        Column(
+            horizontalAlignment = Alignment.End
         ) {
 
-            Text(
-                text = "Chat",
-                fontFamily = PoppinsFamily,
-                fontSize = 12.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = Color.White
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(RoseLight)
+                    .padding(
+                        horizontal = 8.dp,
+                        vertical = 5.dp
+                    )
+            ) {
+
+                Text(
+                    text = "${match.matchPercentage}%",
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = RoseDark
+                )
+            }
+
+            Spacer(
+                modifier = Modifier.height(10.dp)
             )
+
+            Box(
+                modifier = Modifier
+                    .size(38.dp)
+                    .clip(CircleShape)
+                    .background(RosePrimary)
+                    .clickable {
+                        onChatClick()
+                    },
+                contentAlignment = Alignment.Center
+            ) {
+
+                Text(
+                    text = "➤",
+                    fontSize = 17.sp,
+                    color = RoseVeryLight
+                )
+            }
         }
     }
 }
