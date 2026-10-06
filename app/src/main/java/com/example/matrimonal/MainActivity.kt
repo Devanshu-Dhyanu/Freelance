@@ -25,6 +25,7 @@ import com.example.matrimonal.ui.screens.MilanResetPasswordScreen
 import com.example.matrimonal.ui.screens.MilanSplashScreen
 import com.example.matrimonal.ui.theme.MatrimonalTheme
 import com.example.matrimonal.ui.screens.MilanSettingsScreen
+import com.example.matrimonal.ui.screens.MilanPartnerPreferencesScreen
 
 class MainActivity : ComponentActivity() {
 
@@ -400,7 +401,7 @@ class MainActivity : ComponentActivity() {
                                 // Later
                             },
                             onPartnerPreferencesClick = {
-                                // We will create this screen next
+                                currentScreen = "partnerPreferences"
                             },
                             onHelpClick = {
                                 // Later
@@ -416,6 +417,20 @@ class MainActivity : ComponentActivity() {
                             },
                             onLogout = {
                                 currentScreen = "login"
+                            }
+                        )
+                    }
+
+                    // =======================================================
+                    //      Partner Preferences
+                    // =======================================================
+                    "partnerPreferences" -> {
+                        MilanPartnerPreferencesScreen(
+                            onBackClick = {
+                                currentScreen = "settings"
+                            },
+                            onSaveClick = {
+                                currentScreen = "settings"
                             }
                         )
                     }
