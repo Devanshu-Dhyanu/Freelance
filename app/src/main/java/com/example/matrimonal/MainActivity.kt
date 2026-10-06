@@ -317,11 +317,18 @@ class MainActivity : ComponentActivity() {
                     // =========================================================
 
                     "chat" -> {
-
                         MilanChatScreen(
-
                             onBackClick = {
                                 currentScreen = "chats"
+                            },
+                            onProfileClick = {
+                                currentScreen = "profileDetails"
+                            },
+                            onCallClick = {
+                                // Call feature will be added later
+                            },
+                            onVideoCallClick = {
+                                // Video call feature will be added later
                             }
                         )
                     }
