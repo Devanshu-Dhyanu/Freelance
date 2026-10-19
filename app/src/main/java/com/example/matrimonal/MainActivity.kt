@@ -27,6 +27,10 @@ import com.example.matrimonal.ui.screens.MilanSettingsScreen
 import com.example.matrimonal.ui.screens.MilanPartnerPreferencesScreen
 import com.example.matrimonal.ui.screens.MilanNotificationsScreen
 import com.example.matrimonal.ui.theme.MatrimonalTheme
+import com.example.matrimonal.ui.screens.InterestsScreen
+import com.example.matrimonal.ui.screens.MilanProfileVerificationScreen
+import com.example.matrimonal.ui.screens.MilanReportUserScreen
+import com.example.matrimonal.ui.screens.MilanSavedProfilesScreen
 
 
 class MainActivity : ComponentActivity() {
@@ -43,6 +47,49 @@ class MainActivity : ComponentActivity() {
                 var currentScreen by remember {
                     mutableStateOf("splash")
                 }
+
+
+                val discoverProfiles = remember {
+                    androidx.compose.runtime.mutableStateListOf(
+                        com.example.matrimonal.ui.screens.DiscoverProfile(
+                            id = 1,
+                            name = "Aarav Sharma",
+                            age = 25,
+                            city = "New Delhi",
+                            profession = "Software Engineer",
+                            education = "B.Tech",
+                            match = 92
+                        ),
+                        com.example.matrimonal.ui.screens.DiscoverProfile(
+                            id = 2,
+                            name = "Arnav Sharma",
+                            age = 26,
+                            city = "Jalandhar",
+                            profession = "IT Professional",
+                            education = "B.Tech",
+                            match = 93
+                        ),
+                        com.example.matrimonal.ui.screens.DiscoverProfile(
+                            id = 3,
+                            name = "Aditya Kapoor",
+                            age = 26,
+                            city = "Chandigarh",
+                            profession = "Business Analyst",
+                            education = "MBA",
+                            match = 85
+                        ),
+                        com.example.matrimonal.ui.screens.DiscoverProfile(
+                            id = 4,
+                            name = "Karan Malhotra",
+                            age = 28,
+                            city = "Noida",
+                            profession = "Software Developer",
+                            education = "M.Tech",
+                            match = 81
+                        )
+                    )
+                }
+
 
                 when (currentScreen) {
 
@@ -254,18 +301,29 @@ class MainActivity : ComponentActivity() {
                     "discover" -> {
 
                         MilanDiscoverScreen(
+                            profiles = discoverProfiles,
 
                             onBackClick = {
                                 currentScreen = "home"
                             },
 
-                            onProfileClick = {
+                            onProfileClick = { profileId ->
                                 currentScreen = "profileDetails"
                             },
 
-                            onLikeClick = {
-                                // Like functionality will be added later.
+
+                            onLikeClick = { profileId ->
+                                val index = discoverProfiles.indexOfFirst {
+                                    it.id == profileId
+                                }
+                                if (index != -1) {
+                                    val profile = discoverProfiles[index]
+                                    discoverProfiles[index] = profile.copy(
+                                        isSaved = !profile.isSaved
+                                    )
+                                }
                             }
+
                         )
                     }
 
@@ -352,6 +410,10 @@ class MainActivity : ComponentActivity() {
 
                             onSettingsClick = {
                                 currentScreen = "settings"
+                            },
+
+                            onSavedProfilesClick = {
+                                currentScreen = "savedProfiles"
                             }
                         )
                     }
@@ -424,11 +486,11 @@ class MainActivity : ComponentActivity() {
                             },
 
                             onBlockedUsersClick = {
-                                // Later
+                                currentScreen = "reportUser"
                             },
 
                             onSecurityClick = {
-                                // Later
+                                currentScreen = "verification"
                             },
 
                             onPartnerPreferencesClick = {
@@ -440,7 +502,7 @@ class MainActivity : ComponentActivity() {
                             },
 
                             onReportProblemClick = {
-                                // Later
+                                currentScreen = "reportUser"
                             },
 
                             onTermsClick = {
@@ -490,6 +552,67 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     }
+                    "interests" -> {
+                        InterestsScreen(
+                            onBack = {
+                                currentScreen = "home"
+                            },
+                            onViewProfile = { profileId ->
+                                currentScreen = "profileDetails"
+                            },
+                            onOpenChat = { profileId ->
+                                currentScreen = "chat"
+                            }
+                        )
+                    }
+
+                    "verification" -> {
+                        MilanProfileVerificationScreen(
+                            onBackClick = {
+                                currentScreen = "settings"
+                            }
+                        )
+                    }
+
+                    "reportUser" -> {
+                        MilanReportUserScreen(
+                            onBackClick = {
+                                currentScreen = "settings"
+                            }
+                        )
+                    }
+
+
+
+                    "savedProfiles" -> {
+                        MilanSavedProfilesScreen(
+                            profiles = discoverProfiles,
+
+                            onBackClick = {
+                                currentScreen = "profile"
+                            },
+
+                            onProfileClick = { _: Int ->
+                                currentScreen = "profileDetails"
+                            },
+
+                            onUnsaveClick = { profileId: Int ->
+                                val index = discoverProfiles.indexOfFirst {
+                                    it.id == profileId
+                                }
+
+                                if (index != -1) {
+                                    val profile = discoverProfiles[index]
+                                    discoverProfiles[index] = profile.copy(
+                                        isSaved = false
+                                    )
+                                }
+                            }
+                        )
+                    }
+
+
+
                 }
             }
         }
