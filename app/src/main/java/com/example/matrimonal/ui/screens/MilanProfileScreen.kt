@@ -1,3 +1,4 @@
+
 package com.example.matrimonal.ui.screens
 
 import androidx.compose.foundation.background
@@ -40,41 +41,29 @@ fun MilanProfileScreen(
     onBackClick: () -> Unit = {},
     onEditProfileClick: () -> Unit = {},
     onSettingsClick: () -> Unit = {},
+    onSavedProfilesClick: () -> Unit = {},
     onLogout: () -> Unit = {}
 ) {
-
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .background(RoseVeryLight),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-
-        // =========================================================
-        // TOP BAR
-        // =========================================================
-
         item {
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color.White)
-                    .padding(
-                        horizontal = 16.dp,
-                        vertical = 14.dp
-                    ),
+                    .padding(horizontal = 16.dp, vertical = 14.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-
                 Text(
                     text = "‹",
                     fontSize = 34.sp,
                     color = TextMain,
                     modifier = Modifier
-                        .clickable {
-                            onBackClick()
-                        }
+                        .clickable { onBackClick() }
                         .padding(end = 12.dp)
                 )
 
@@ -92,30 +81,19 @@ fun MilanProfileScreen(
                     fontSize = 23.sp,
                     color = TextMain,
                     modifier = Modifier
-                        .clickable {
-                            onSettingsClick()
-                        }
+                        .clickable { onSettingsClick() }
                         .padding(6.dp)
                 )
             }
         }
 
-        // =========================================================
-        // PROFILE HEADER
-        // =========================================================
-
         item {
-
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(
-                        horizontal = 20.dp,
-                        vertical = 12.dp
-                    ),
+                    .padding(horizontal = 20.dp, vertical = 12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 Box(
                     modifier = Modifier
                         .size(112.dp)
@@ -123,7 +101,6 @@ fun MilanProfileScreen(
                         .background(RoseLight),
                     contentAlignment = Alignment.Center
                 ) {
-
                     Text(
                         text = "R",
                         fontFamily = PoppinsFamily,
@@ -133,9 +110,7 @@ fun MilanProfileScreen(
                     )
                 }
 
-                Spacer(
-                    modifier = Modifier.height(12.dp)
-                )
+                Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
                     text = "Ritika Goel",
@@ -145,9 +120,7 @@ fun MilanProfileScreen(
                     color = TextMain
                 )
 
-                Spacer(
-                    modifier = Modifier.height(4.dp)
-                )
+                Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
                     text = "21 • Female • New Delhi",
@@ -156,9 +129,7 @@ fun MilanProfileScreen(
                     color = TextSecondary
                 )
 
-                Spacer(
-                    modifier = Modifier.height(4.dp)
-                )
+                Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
                     text = "Software Developer",
@@ -168,9 +139,7 @@ fun MilanProfileScreen(
                     color = RosePrimary
                 )
 
-                Spacer(
-                    modifier = Modifier.height(14.dp)
-                )
+                Spacer(modifier = Modifier.height(14.dp))
 
                 Button(
                     onClick = onEditProfileClick,
@@ -179,7 +148,6 @@ fun MilanProfileScreen(
                     ),
                     shape = RoundedCornerShape(12.dp)
                 ) {
-
                     Text(
                         text = "✎  Edit Profile",
                         fontFamily = PoppinsFamily,
@@ -191,23 +159,13 @@ fun MilanProfileScreen(
             }
         }
 
-        // =========================================================
-        // PROFILE COMPLETION
-        // =========================================================
-
         item {
-
             ProfileCard {
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-
-                    Column(
-                        modifier = Modifier.weight(1f)
-                    ) {
-
+                    Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = "Profile Completion",
                             fontFamily = PoppinsFamily,
@@ -216,9 +174,7 @@ fun MilanProfileScreen(
                             color = TextMain
                         )
 
-                        Spacer(
-                            modifier = Modifier.height(4.dp)
-                        )
+                        Spacer(modifier = Modifier.height(4.dp))
 
                         Text(
                             text = "Complete your profile to get better matches",
@@ -237,11 +193,8 @@ fun MilanProfileScreen(
                     )
                 }
 
-                Spacer(
-                    modifier = Modifier.height(12.dp)
-                )
+                Spacer(modifier = Modifier.height(12.dp))
 
-                // Progress bar
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -249,7 +202,6 @@ fun MilanProfileScreen(
                         .clip(RoundedCornerShape(10.dp))
                         .background(RoseLight)
                 ) {
-
                     Box(
                         modifier = Modifier
                             .fillMaxWidth(0.8f)
@@ -259,9 +211,7 @@ fun MilanProfileScreen(
                     )
                 }
 
-                Spacer(
-                    modifier = Modifier.height(8.dp)
-                )
+                Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
                     text = "Add your family details and interests",
@@ -272,25 +222,9 @@ fun MilanProfileScreen(
             }
         }
 
-        // =========================================================
-        // ABOUT ME
-        // =========================================================
-
         item {
-
             ProfileCard {
-
-                Text(
-                    text = "About Me",
-                    fontFamily = PoppinsFamily,
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = TextMain
-                )
-
-                Spacer(
-                    modifier = Modifier.height(8.dp)
-                )
+                SectionTitle("About Me")
 
                 Text(
                     text = "I am a passionate and ambitious person who enjoys learning new things, travelling and spending quality time with family and friends.",
@@ -302,158 +236,46 @@ fun MilanProfileScreen(
             }
         }
 
-        // =========================================================
-        // BASIC INFORMATION
-        // =========================================================
-
         item {
-
             ProfileCard {
+                SectionTitle("Basic Information")
 
-                Text(
-                    text = "Basic Information",
-                    fontFamily = PoppinsFamily,
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = TextMain
-                )
-
-                Spacer(
-                    modifier = Modifier.height(10.dp)
-                )
-
-                ProfileInfoRow(
-                    label = "Age",
-                    value = "21 years"
-                )
-
-                ProfileInfoRow(
-                    label = "Height",
-                    value = "5'5\""
-                )
-
-                ProfileInfoRow(
-                    label = "Religion",
-                    value = "Hindu"
-                )
-
-                ProfileInfoRow(
-                    label = "Location",
-                    value = "New Delhi"
-                )
-
-                ProfileInfoRow(
-                    label = "Marital Status",
-                    value = "Never Married"
-                )
+                ProfileInfoRow("Age", "21 years")
+                ProfileInfoRow("Height", "5'5\"")
+                ProfileInfoRow("Religion", "Hindu")
+                ProfileInfoRow("Location", "New Delhi")
+                ProfileInfoRow("Marital Status", "Never Married")
             }
         }
 
-        // =========================================================
-        // EDUCATION AND CAREER
-        // =========================================================
-
         item {
-
             ProfileCard {
+                SectionTitle("Education & Career")
 
-                Text(
-                    text = "Education & Career",
-                    fontFamily = PoppinsFamily,
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = TextMain
-                )
-
-                Spacer(
-                    modifier = Modifier.height(10.dp)
-                )
-
-                ProfileInfoRow(
-                    label = "Education",
-                    value = "B.Tech Computer Science"
-                )
-
-                ProfileInfoRow(
-                    label = "Occupation",
-                    value = "Software Developer"
-                )
-
-                ProfileInfoRow(
-                    label = "Work Location",
-                    value = "New Delhi"
-                )
+                ProfileInfoRow("Education", "B.Tech Computer Science")
+                ProfileInfoRow("Occupation", "Software Developer")
+                ProfileInfoRow("Work Location", "New Delhi")
             }
         }
 
-        // =========================================================
-        // LIFESTYLE
-        // =========================================================
-
         item {
-
             ProfileCard {
+                SectionTitle("Lifestyle")
 
-                Text(
-                    text = "Lifestyle",
-                    fontFamily = PoppinsFamily,
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = TextMain
-                )
-
-                Spacer(
-                    modifier = Modifier.height(10.dp)
-                )
-
-                ProfileInfoRow(
-                    label = "Diet",
-                    value = "Vegetarian"
-                )
-
-                ProfileInfoRow(
-                    label = "Smoking",
-                    value = "Never"
-                )
-
-                ProfileInfoRow(
-                    label = "Drinking",
-                    value = "Occasionally"
-                )
-
-                ProfileInfoRow(
-                    label = "Interests",
-                    value = "Travel • Music • Technology"
-                )
+                ProfileInfoRow("Diet", "Vegetarian")
+                ProfileInfoRow("Smoking", "Never")
+                ProfileInfoRow("Drinking", "Occasionally")
+                ProfileInfoRow("Interests", "Travel • Music • Technology")
             }
         }
 
-        // =========================================================
-        // ACCOUNT
-        // =========================================================
-
         item {
-
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(
-                        horizontal = 20.dp,
-                        vertical = 8.dp
-                    )
+                    .padding(horizontal = 20.dp, vertical = 8.dp)
             ) {
-
-                Text(
-                    text = "Account",
-                    fontFamily = PoppinsFamily,
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = TextMain
-                )
-
-                Spacer(
-                    modifier = Modifier.height(6.dp)
-                )
+                SectionTitle("Account")
 
                 ProfileActionRow(
                     icon = "✎",
@@ -463,21 +285,25 @@ fun MilanProfileScreen(
                 )
 
                 ProfileActionRow(
+                    icon = "♡",
+                    title = "Saved Profiles",
+                    subtitle = "View profiles you have saved",
+                    onClick = onSavedProfilesClick
+                )
+
+                ProfileActionRow(
                     icon = "⚙",
                     title = "Settings",
                     subtitle = "Privacy, security and preferences",
                     onClick = onSettingsClick
                 )
 
-                Spacer(
-                    modifier = Modifier.height(4.dp)
-                )
+                Spacer(modifier = Modifier.height(4.dp))
 
                 TextButton(
                     onClick = onLogout,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-
                     Text(
                         text = "Log Out",
                         fontFamily = PoppinsFamily,
@@ -490,54 +316,51 @@ fun MilanProfileScreen(
         }
 
         item {
-            Spacer(
-                modifier = Modifier.height(20.dp)
-            )
+            Spacer(modifier = Modifier.height(20.dp))
         }
     }
 }
-
-
-// =============================================================
-// PROFILE CARD
-// =============================================================
 
 @Composable
 private fun ProfileCard(
     content: @Composable () -> Unit
 ) {
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp)
             .clip(RoundedCornerShape(16.dp))
             .background(Color.White)
-            .padding(16.dp)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-
         content()
     }
 }
 
-
-// =============================================================
-// PROFILE INFORMATION ROW
-// =============================================================
+@Composable
+private fun SectionTitle(title: String) {
+    Text(
+        text = title,
+        fontFamily = PoppinsFamily,
+        fontSize = 15.sp,
+        fontWeight = FontWeight.Bold,
+        color = TextMain,
+        modifier = Modifier.padding(bottom = 8.dp)
+    )
+}
 
 @Composable
 private fun ProfileInfoRow(
     label: String,
     value: String
 ) {
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 7.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-
         Text(
             text = label,
             fontFamily = PoppinsFamily,
@@ -557,11 +380,6 @@ private fun ProfileInfoRow(
     }
 }
 
-
-// =============================================================
-// ACCOUNT ACTION ROW
-// =============================================================
-
 @Composable
 private fun ProfileActionRow(
     icon: String,
@@ -569,17 +387,13 @@ private fun ProfileActionRow(
     subtitle: String,
     onClick: () -> Unit
 ) {
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable {
-                onClick()
-            }
+            .clickable { onClick() }
             .padding(vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-
         Box(
             modifier = Modifier
                 .size(42.dp)
@@ -587,7 +401,6 @@ private fun ProfileActionRow(
                 .background(RoseLight),
             contentAlignment = Alignment.Center
         ) {
-
             Text(
                 text = icon,
                 fontSize = 19.sp,
@@ -595,14 +408,9 @@ private fun ProfileActionRow(
             )
         }
 
-        Spacer(
-            modifier = Modifier.width(12.dp)
-        )
+        Spacer(modifier = Modifier.width(12.dp))
 
-        Column(
-            modifier = Modifier.weight(1f)
-        ) {
-
+        Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = title,
                 fontFamily = PoppinsFamily,
@@ -611,9 +419,7 @@ private fun ProfileActionRow(
                 color = TextMain
             )
 
-            Spacer(
-                modifier = Modifier.height(2.dp)
-            )
+            Spacer(modifier = Modifier.height(2.dp))
 
             Text(
                 text = subtitle,

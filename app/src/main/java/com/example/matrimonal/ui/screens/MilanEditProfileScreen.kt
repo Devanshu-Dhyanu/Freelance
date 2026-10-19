@@ -1,9 +1,7 @@
+
 package com.example.matrimonal.ui.screens
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,574 +9,351 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.ExposedDropdownMenu
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.matrimonal.ui.theme.PoppinsFamily
-import com.example.matrimonal.ui.theme.RoseBorder
-import com.example.matrimonal.ui.theme.RoseLight
-import com.example.matrimonal.ui.theme.RosePrimary
-import com.example.matrimonal.ui.theme.RoseVeryLight
-import com.example.matrimonal.ui.theme.TextMain
-import com.example.matrimonal.ui.theme.TextSecondary
 
+private val RosePrimary = Color(0xFFE85B78)
+private val TextMain = Color(0xFF333333)
+
+data class MilanEditableProfile(
+    val fullName: String = "Ritika Goel",
+    val dateOfBirth: String = "15 June 2005",
+    val gender: String = "Female",
+    val phoneNumber: String = "",
+    val location: String = "",
+    val education: String = "",
+    val occupation: String = "",
+    val workLocation: String = "",
+    val aboutMe: String = "",
+    val diet: String = "Vegetarian",
+    val smoking: String = "Never",
+    val drinking: String = "Occasionally",
+    val interests: String = ""
+)
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MilanEditProfileScreen(
     onBackClick: () -> Unit = {},
-    onSaveClick: () -> Unit = {}
+    initialProfile: MilanEditableProfile = MilanEditableProfile(),
+    onSaveClick: (MilanEditableProfile) -> Unit = {}
 ) {
-
-    // ============================================================
-    // PERSONAL INFORMATION
-    // ============================================================
-
-    var fullName by remember {
-        mutableStateOf("Ritika Goel")
+    var fullName by remember(initialProfile) {
+        mutableStateOf(initialProfile.fullName)
+    }
+    var dateOfBirth by remember(initialProfile) {
+        mutableStateOf(initialProfile.dateOfBirth)
+    }
+    var gender by remember(initialProfile) {
+        mutableStateOf(initialProfile.gender)
+    }
+    var phoneNumber by remember(initialProfile) {
+        mutableStateOf(initialProfile.phoneNumber)
+    }
+    var location by remember(initialProfile) {
+        mutableStateOf(initialProfile.location)
+    }
+    var education by remember(initialProfile) {
+        mutableStateOf(initialProfile.education)
+    }
+    var occupation by remember(initialProfile) {
+        mutableStateOf(initialProfile.occupation)
+    }
+    var workLocation by remember(initialProfile) {
+        mutableStateOf(initialProfile.workLocation)
+    }
+    var aboutMe by remember(initialProfile) {
+        mutableStateOf(initialProfile.aboutMe)
+    }
+    var diet by remember(initialProfile) {
+        mutableStateOf(initialProfile.diet)
+    }
+    var smoking by remember(initialProfile) {
+        mutableStateOf(initialProfile.smoking)
+    }
+    var drinking by remember(initialProfile) {
+        mutableStateOf(initialProfile.drinking)
+    }
+    var interests by remember(initialProfile) {
+        mutableStateOf(initialProfile.interests)
     }
 
-    var dateOfBirth by remember {
-        mutableStateOf("15 June 2005")
-    }
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "Edit Profile",
+                        fontWeight = FontWeight.Bold,
+                        color = TextMain
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = onBackClick) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Go back"
+                        )
+                    }
+                }
+            )
+        },
+        containerColor = Color(0xFFFFF8FA)
+    ) { paddingValues ->
 
-    var gender by remember {
-        mutableStateOf("Female")
-    }
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 20.dp, vertical = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
 
-    var phoneNumber by remember {
-        mutableStateOf("+91 9876543210")
-    }
+            SectionTitle("Personal Information")
 
-    var location by remember {
-        mutableStateOf("New Delhi")
-    }
+            ProfileEditField(
+                label = "Full Name",
+                value = fullName,
+                onValueChange = { fullName = it }
+            )
 
-    // ============================================================
-    // EDUCATION & CAREER
-    // ============================================================
+            ProfileEditField(
+                label = "Date of Birth",
+                value = dateOfBirth,
+                onValueChange = { dateOfBirth = it }
+            )
 
-    var education by remember {
-        mutableStateOf("B.Tech Computer Science")
-    }
+            ProfileDropdown(
+                label = "Gender",
+                selected = gender,
+                options = listOf("Female", "Male", "Other"),
+                onSelected = { gender = it }
+            )
 
-    var occupation by remember {
-        mutableStateOf("Software Developer")
-    }
+            ProfileEditField(
+                label = "Phone Number",
+                value = phoneNumber,
+                onValueChange = { phoneNumber = it }
+            )
 
-    var workLocation by remember {
-        mutableStateOf("New Delhi")
-    }
+            ProfileEditField(
+                label = "City / Location",
+                value = location,
+                onValueChange = { location = it }
+            )
 
-    // ============================================================
-    // ABOUT
-    // ============================================================
+            Spacer(modifier = Modifier.height(8.dp))
 
-    var aboutMe by remember {
-        mutableStateOf(
-            "I am a passionate and ambitious person who enjoys learning new things, travelling and spending quality time with family and friends."
-        )
-    }
+            SectionTitle("Education & Career")
 
-    // ============================================================
-    // LIFESTYLE
-    // ============================================================
+            ProfileEditField(
+                label = "Education",
+                value = education,
+                onValueChange = { education = it }
+            )
 
-    var diet by remember {
-        mutableStateOf("Vegetarian")
-    }
+            ProfileEditField(
+                label = "Occupation",
+                value = occupation,
+                onValueChange = { occupation = it }
+            )
 
-    var smoking by remember {
-        mutableStateOf("Never")
-    }
+            ProfileEditField(
+                label = "Work Location",
+                value = workLocation,
+                onValueChange = { workLocation = it }
+            )
 
-    var drinking by remember {
-        mutableStateOf("Occasionally")
-    }
+            Spacer(modifier = Modifier.height(8.dp))
 
-    // ============================================================
-    // INTERESTS
-    // ============================================================
+            SectionTitle("About Me")
 
-    var interests by remember {
-        mutableStateOf("Travel, Music, Technology")
-    }
+            ProfileEditField(
+                label = "Tell us about yourself",
+                value = aboutMe,
+                onValueChange = { aboutMe = it },
+                singleLine = false
+            )
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(RoseVeryLight),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
+            Spacer(modifier = Modifier.height(8.dp))
 
-        // ========================================================
-        // TOP BAR
-        // ========================================================
+            SectionTitle("Lifestyle")
 
-        item {
+            ProfileDropdown(
+                label = "Diet",
+                selected = diet,
+                options = listOf(
+                    "Vegetarian",
+                    "Non-Vegetarian",
+                    "Eggetarian",
+                    "Vegan"
+                ),
+                onSelected = { diet = it }
+            )
 
-            Row(
+            ProfileDropdown(
+                label = "Smoking",
+                selected = smoking,
+                options = listOf("Never", "Occasionally", "Regularly"),
+                onSelected = { smoking = it }
+            )
+
+            ProfileDropdown(
+                label = "Drinking",
+                selected = drinking,
+                options = listOf("Never", "Occasionally", "Regularly"),
+                onSelected = { drinking = it }
+            )
+
+            ProfileEditField(
+                label = "Interests",
+                value = interests,
+                onValueChange = { interests = it }
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Button(
+                onClick = {
+                    val updatedProfile = MilanEditableProfile(
+                        fullName = fullName.trim(),
+                        dateOfBirth = dateOfBirth.trim(),
+                        gender = gender,
+                        phoneNumber = phoneNumber.trim(),
+                        location = location.trim(),
+                        education = education.trim(),
+                        occupation = occupation.trim(),
+                        workLocation = workLocation.trim(),
+                        aboutMe = aboutMe.trim(),
+                        diet = diet,
+                        smoking = smoking,
+                        drinking = drinking,
+                        interests = interests.trim()
+                    )
+
+                    onSaveClick(updatedProfile)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.White)
-                    .padding(
-                        horizontal = 16.dp,
-                        vertical = 14.dp
-                    ),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-
-                Text(
-                    text = "‹",
-                    fontSize = 34.sp,
-                    color = TextMain,
-                    modifier = Modifier
-                        .clickable {
-                            onBackClick()
-                        }
-                        .padding(end = 12.dp)
+                    .height(52.dp),
+                shape = RoundedCornerShape(14.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = RosePrimary
                 )
-
+            ) {
                 Text(
-                    text = "Edit Profile",
-                    fontFamily = PoppinsFamily,
-                    fontSize = 21.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = TextMain
+                    text = "Save Changes",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
                 )
             }
+
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Spacer(modifier = Modifier.weight(1f))
+            }
         }
+    }
+}
 
-        // ========================================================
-        // PROFILE PHOTO
-        // ========================================================
+@Composable
+private fun SectionTitle(title: String) {
+    Text(
+        text = title,
+        fontSize = 18.sp,
+        fontWeight = FontWeight.Bold,
+        color = RosePrimary
+    )
+}
 
-        item {
+@Composable
+private fun ProfileEditField(
+    label: String,
+    value: String,
+    onValueChange: (String) -> Unit,
+    singleLine: Boolean = true
+) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = onValueChange,
+        label = { Text(label) },
+        modifier = Modifier.fillMaxWidth(),
+        singleLine = singleLine,
+        shape = RoundedCornerShape(12.dp)
+    )
+}
 
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        horizontal = 20.dp,
-                        vertical = 12.dp
-                    ),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ProfileDropdown(
+    label: String,
+    selected: String,
+    options: List<String>,
+    onSelected: (String) -> Unit
+) {
+    var expanded by remember { mutableStateOf(false) }
 
-                Box(
-                    modifier = Modifier
-                        .size(105.dp)
-                        .clip(CircleShape)
-                        .background(RoseLight),
-                    contentAlignment = Alignment.Center
-                ) {
-
-                    Text(
-                        text = "R",
-                        fontFamily = PoppinsFamily,
-                        fontSize = 42.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = RosePrimary
-                    )
-                }
-
-                Spacer(
-                    modifier = Modifier.height(10.dp)
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = it },
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        OutlinedTextField(
+            value = selected,
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(label) },
+            trailingIcon = {
+                ExposedDropdownMenuDefaults.TrailingIcon(
+                    expanded = expanded
                 )
+            },
+            modifier = Modifier
+                .menuAnchor()
+                .fillMaxWidth(),
+            shape = RoundedCornerShape(12.dp)
+        )
 
-                Text(
-                    text = "Change Photo",
-                    fontFamily = PoppinsFamily,
-                    fontSize = 13.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = RosePrimary,
-                    modifier = Modifier.clickable {
-                        // Photo picker will be connected later.
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            options.forEach { option ->
+                DropdownMenuItem(
+                    text = { Text(option) },
+                    onClick = {
+                        onSelected(option)
+                        expanded = false
                     }
                 )
             }
         }
-
-        // ========================================================
-        // PERSONAL INFORMATION
-        // ========================================================
-
-        item {
-
-            EditProfileSectionTitle(
-                title = "Personal Information"
-            )
-        }
-
-        item {
-
-            EditProfileInput(
-                label = "Full Name",
-                value = fullName,
-                onValueChange = {
-                    fullName = it
-                }
-            )
-        }
-
-        item {
-
-            EditProfileInput(
-                label = "Date of Birth",
-                value = dateOfBirth,
-                onValueChange = {
-                    dateOfBirth = it
-                }
-            )
-        }
-
-        item {
-
-            EditProfileInput(
-                label = "Gender",
-                value = gender,
-                onValueChange = {
-                    gender = it
-                }
-            )
-        }
-
-        item {
-
-            EditProfileInput(
-                label = "Phone Number",
-                value = phoneNumber,
-                onValueChange = {
-                    phoneNumber = it
-                },
-                keyboardType = KeyboardType.Phone
-            )
-        }
-
-        item {
-
-            EditProfileInput(
-                label = "Location",
-                value = location,
-                onValueChange = {
-                    location = it
-                }
-            )
-        }
-
-        // ========================================================
-        // EDUCATION & CAREER
-        // ========================================================
-
-        item {
-
-            EditProfileSectionTitle(
-                title = "Education & Career"
-            )
-        }
-
-        item {
-
-            EditProfileInput(
-                label = "Education",
-                value = education,
-                onValueChange = {
-                    education = it
-                }
-            )
-        }
-
-        item {
-
-            EditProfileInput(
-                label = "Occupation",
-                value = occupation,
-                onValueChange = {
-                    occupation = it
-                }
-            )
-        }
-
-        item {
-
-            EditProfileInput(
-                label = "Work Location",
-                value = workLocation,
-                onValueChange = {
-                    workLocation = it
-                }
-            )
-        }
-
-        // ========================================================
-        // ABOUT ME
-        // ========================================================
-
-        item {
-
-            EditProfileSectionTitle(
-                title = "About Me"
-            )
-        }
-
-        item {
-
-            Column(
-                modifier = Modifier.padding(horizontal = 20.dp)
-            ) {
-
-                Text(
-                    text = "Bio",
-                    fontFamily = PoppinsFamily,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = TextMain
-                )
-
-                Spacer(
-                    modifier = Modifier.height(6.dp)
-                )
-
-                OutlinedTextField(
-                    value = aboutMe,
-                    onValueChange = {
-                        aboutMe = it
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    minLines = 4,
-                    maxLines = 6,
-                    shape = RoundedCornerShape(14.dp),
-                    placeholder = {
-                        Text(
-                            text = "Tell something about yourself...",
-                            fontFamily = PoppinsFamily,
-                            fontSize = 12.sp
-                        )
-                    },
-                    colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = RosePrimary,
-                        unfocusedBorderColor = RoseBorder,
-                        focusedContainerColor = Color.White,
-                        unfocusedContainerColor = Color.White
-                    )
-                )
-            }
-        }
-
-        // ========================================================
-        // LIFESTYLE
-        // ========================================================
-
-        item {
-
-            EditProfileSectionTitle(
-                title = "Lifestyle"
-            )
-        }
-
-        item {
-
-            EditProfileInput(
-                label = "Diet",
-                value = diet,
-                onValueChange = {
-                    diet = it
-                }
-            )
-        }
-
-        item {
-
-            EditProfileInput(
-                label = "Smoking",
-                value = smoking,
-                onValueChange = {
-                    smoking = it
-                }
-            )
-        }
-
-        item {
-
-            EditProfileInput(
-                label = "Drinking",
-                value = drinking,
-                onValueChange = {
-                    drinking = it
-                }
-            )
-        }
-
-        // ========================================================
-        // INTERESTS
-        // ========================================================
-
-        item {
-
-            EditProfileSectionTitle(
-                title = "Interests"
-            )
-        }
-
-        item {
-
-            EditProfileInput(
-                label = "Your Interests",
-                value = interests,
-                onValueChange = {
-                    interests = it
-                }
-            )
-        }
-
-        // ========================================================
-        // SAVE BUTTON
-        // ========================================================
-
-        item {
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        horizontal = 20.dp,
-                        vertical = 18.dp
-                    )
-            ) {
-
-                Button(
-                    onClick = {
-                        onSaveClick()
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(52.dp),
-                    shape = RoundedCornerShape(14.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = RosePrimary
-                    )
-                ) {
-
-                    Text(
-                        text = "Save Changes",
-                        fontFamily = PoppinsFamily,
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.White
-                    )
-                }
-
-                Spacer(
-                    modifier = Modifier.height(8.dp)
-                )
-
-                Text(
-                    text = "Your profile information is private and secure.",
-                    fontFamily = PoppinsFamily,
-                    fontSize = 10.sp,
-                    color = TextSecondary,
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = androidx.compose.ui.text.style.TextAlign.Center
-                )
-            }
-        }
-
-        item {
-            Spacer(
-                modifier = Modifier.height(20.dp)
-            )
-        }
     }
 }
 
-
-// ================================================================
-// SECTION TITLE
-// ================================================================
-
-@Composable
-private fun EditProfileSectionTitle(
-    title: String
-) {
-
-    Text(
-        text = title,
-        fontFamily = PoppinsFamily,
-        fontSize = 15.sp,
-        fontWeight = FontWeight.Bold,
-        color = TextMain,
-        modifier = Modifier.padding(
-            start = 20.dp,
-            top = 8.dp,
-            bottom = 2.dp
-        )
-    )
-}
-
-
-// ================================================================
-// INPUT FIELD
-// ================================================================
-
-@Composable
-private fun EditProfileInput(
-    label: String,
-    value: String,
-    onValueChange: (String) -> Unit,
-    keyboardType: KeyboardType = KeyboardType.Text
-) {
-
-    Column(
-        modifier = Modifier.padding(
-            horizontal = 20.dp
-        )
-    ) {
-
-        Text(
-            text = label,
-            fontFamily = PoppinsFamily,
-            fontSize = 11.sp,
-            fontWeight = FontWeight.Medium,
-            color = TextSecondary,
-            modifier = Modifier.padding(
-                bottom = 5.dp
-            )
-        )
-
-        OutlinedTextField(
-            value = value,
-            onValueChange = onValueChange,
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-            shape = RoundedCornerShape(14.dp),
-            keyboardOptions = KeyboardOptions(
-                keyboardType = keyboardType
-            ),
-            colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = RosePrimary,
-                unfocusedBorderColor = RoseBorder,
-                focusedContainerColor = Color.White,
-                unfocusedContainerColor = Color.White,
-                cursorColor = RosePrimary
-            )
-        )
-    }
-}
